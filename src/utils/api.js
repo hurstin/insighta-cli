@@ -9,6 +9,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
+  const BACKEND_URL = process.env.INSIGHTA_BACKEND_URL;
+  if (BACKEND_URL) {
+    config.baseURL = BACKEND_URL;
+  }
+  
   const credentials = await loadCredentials();
   if (credentials && credentials.access_token) {
     config.headers.Authorization = `Bearer ${credentials.access_token}`;

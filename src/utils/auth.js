@@ -5,12 +5,12 @@ import axios from 'axios';
 import { saveCredentials } from './config.js';
 import chalk from 'chalk';
 
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const BACKEND_URL = process.env.INSIGHTA_BACKEND_URL;
-const REDIRECT_PORT = 8080;
-const REDIRECT_URI = `http://localhost:${REDIRECT_PORT}/callback`;
-
 export const login = async () => {
+  const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+  const BACKEND_URL = process.env.INSIGHTA_BACKEND_URL;
+  const REDIRECT_PORT = 8080;
+  const REDIRECT_URI = `http://localhost:${REDIRECT_PORT}/callback`;
+
   const challenge = await pkceChallenge();
   const codeVerifier = challenge.code_verifier;
   const codeChallenge = challenge.code_challenge;
@@ -77,6 +77,7 @@ export const login = async () => {
 };
 
 export const refreshToken = async (storedRefreshToken) => {
+  const BACKEND_URL = process.env.INSIGHTA_BACKEND_URL;
   try {
     const response = await axios.post(`${BACKEND_URL}/v1/auth/refresh`, {
       refresh_token: storedRefreshToken,

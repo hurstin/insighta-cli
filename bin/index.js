@@ -6,7 +6,15 @@ import profilesCommand from '../src/commands/profiles.js';
 import exportCommand from '../src/commands/export.js';
 import dotenv from 'dotenv';
 
-dotenv.config();
+import fs from 'fs';
+import path from 'path';
+
+// Load .env or config.env from the current directory
+['.env', 'config.env'].forEach(file => {
+  if (fs.existsSync(path.join(process.cwd(), file))) {
+    dotenv.config({ path: path.join(process.cwd(), file) });
+  }
+});
 
 const program = new Command();
 
